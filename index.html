@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PIXI Pong!</title>
+    <style>
+      body {
+        background-color: #333;
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-family: Inter;
+      }
+      footer {
+        color: #ccc;
+        font-size: 0.75rem;
+        text-align: center;
+        line-height: 0.75;
+      }
+      footer a {
+        color: #ff0000;
+        text-underline-offset: 2px;
+      }
+      footer a:hover {
+        color: #f1f1f1;
+      }
+      footer h3 {
+        font-size: 0.75rem;
+        font-weight: normal;
+      }
+    </style>
+  </head>
+  <body>
+    <main id="the-pong-table"></main>
+    <footer>
+      <h3>Phillip Cantu</h3>
+      <p>
+        🎥
+        <a
+          href="https://youtu.be/MIVLYQ8B4HE"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Code Review Video
+        </a>
+        🎥
+      </p>
+      <p>WDV3322-O | Term C202508 | Section 01</p>
+    </footer>
+    <!-- Load in the PixiJS -->
+    <script src="https://pixijs.download/release/pixi.min.js"></script>
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
