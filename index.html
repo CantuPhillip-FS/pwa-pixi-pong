@@ -4,39 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PIXI Pong!</title>
-    <style>
-      body {
-        background-color: #333;
-        margin: 0;
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        font-family: Inter;
-      }
-      footer {
-        color: #ccc;
-        font-size: 0.75rem;
-        text-align: center;
-        line-height: 0.75;
-      }
-      footer a {
-        color: #ff0000;
-        text-underline-offset: 2px;
-      }
-      footer a:hover {
-        color: #f1f1f1;
-      }
-      footer h3 {
-        font-size: 0.75rem;
-        font-weight: normal;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main id="the-pong-table"></main>
+    <main>
+      <h1>Play PIXI Pong</h1>
+      <p>Click the "Play" button below.</p>
+      <p id="game-over-text">All 4 sides have been hit!</p>
+      <img src="./gameover.gif" alt="retro game over gif" />
+      <div id="the-pong-table"></div>
+      <button id="start">Play</button>
+    </main>
+
     <footer>
       <h3>Phillip Cantu</h3>
       <p>

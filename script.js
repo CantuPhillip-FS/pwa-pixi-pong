@@ -6,15 +6,33 @@ await app.init({
 });
 
 /* -------------------------------------------------------------------------- */
-/*                             Add PIXIJS to body                             */
+/*                             Add PIXIJS to div                             */
 /* -------------------------------------------------------------------------- */
-document.getElementById("the-pong-table").appendChild(app.canvas);
+const pongTable = document.getElementById("the-pong-table");
+pongTable.appendChild(app.canvas);
 
 /* -------------------------------------------------------------------------- */
-/*                            Add text to the page                            */
+/*                            Add bg & text to the page                       */
 /* -------------------------------------------------------------------------- */
+// bg image by <https://pixabay.com/users/prawny-162579/
+const bgTexture = await PIXI.Assets.load("./background.jpg");
+const tiling = new PIXI.TilingSprite({
+  texture: bgTexture,
+  width: 800,
+  height: 800,
+});
+app.stage.addChild(tiling);
+
+const brightnessFilter = new PIXI.ColorMatrixFilter();
+brightnessFilter.brightness(0.5);
+tiling.filters = [brightnessFilter];
+
+app.ticker.add(() => {
+  tiling.tilePosition.x -= 1;
+});
+
 const style = new PIXI.TextStyle({
-  fill: "rgba(49, 44, 39, 0.3)",
+  fill: "rgba(73, 65, 57, 0.5)",
   fontSize: 72,
   fontFamily: "Inter",
 });
@@ -58,7 +76,7 @@ app.stage.addChild(left, top, right, bottom);
 /* -------------------------------------------------------------------------- */
 /*                 create circle with the .circle chain method                */
 /* -------------------------------------------------------------------------- */
-const circle = new PIXI.Graphics().circle(5, 5, 5).fill({ color: 0xf5ef42 });
+const circle = new PIXI.Graphics().circle(10, 10, 10).fill({ color: 0xf5ef42 });
 
 // set circle's random position
 circle.position.set(
@@ -81,9 +99,13 @@ let leftBounce = false;
 let topBounce = false;
 let rightBounce = false;
 let bottomBounce = false;
+const img = document.querySelector("img");
+const btn = document.getElementById("start");
+const msg = document.getElementById("game-over-text");
 
 // ticker for movement and adding functions
-app.ticker.add(() => {
+const ticker = new PIXI.Ticker();
+ticker.add(() => {
   if (circle.x >= 800 || circle.x <= 0) {
     xv = -xv;
     onBounce();
@@ -96,6 +118,15 @@ app.ticker.add(() => {
   }
   circle.x += xv;
   circle.y += yv;
+});
+
+// Add eventlistner and functionality to play button
+btn.addEventListener("click", () => {
+  msg.style.display = "none";
+  btn.style.display = "none";
+  ticker.start();
+  img.style.display = "none";
+  pongTable.style.display = "block";
 });
 
 // function to redraw recctangles
@@ -123,17 +154,32 @@ function onBounce() {
   }
 }
 
+// function to to stage
+function reset() {
+  left.clear().rect(0, 0, THICKNESS, HEIGHT).fill(0xffffff);
+  top.clear().rect(0, 0, WIDTH, THICKNESS).fill(0xffffff);
+  right
+    .clear()
+    .rect(WIDTH - THICKNESS, 0, THICKNESS, HEIGHT)
+    .fill(0xffffff);
+  bottom
+    .clear()
+    .rect(0, HEIGHT - THICKNESS, WIDTH, THICKNESS)
+    .fill(0xffffff);
+}
+
 // Promise to end the game & reset border colors
 const checkBounce = () => {
   return new Promise((resolve, reject) => {
     if (leftBounce && topBounce && rightBounce && bottomBounce) {
       resolve(
-        alert("The ball has bounced off all four edges. Game over!"),
+        (msg.style.display = "block"),
+        (pongTable.style.display = "none"),
+        (img.style.display = "block"),
+        (btn.style.display = "block"),
         (leftBounce = topBounce = rightBounce = bottomBounce = false),
-        redraw(left, 0, 0, THICKNESS, HEIGHT, 0xffffff),
-        redraw(top, 0, 0, WIDTH, THICKNESS, 0xffffff),
-        redraw(right, WIDTH - THICKNESS, 0, THICKNESS, HEIGHT, 0xffffff),
-        redraw(bottom, 0, HEIGHT - THICKNESS, WIDTH, THICKNESS, 0xffffff)
+        ticker.stop(),
+        reset()
       );
     }
   });

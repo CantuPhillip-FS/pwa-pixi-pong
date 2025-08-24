@@ -1,0 +1,66 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: #333;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: Inter;
+  color: crimson;
+}
+h1,
+p {
+  margin-top: 0.5rem;
+}
+#the-pong-table {
+  margin: 2rem;
+}
+#game-over-text {
+  color: white;
+  font-size: 2rem;
+  display: none;
+}
+img {
+  display: none;
+  margin: 1rem;
+}
+#start {
+  border: none;
+  border-radius: 8px;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+#start:hover {
+  background-color: white;
+  color: black;
+}
+footer {
+  color: #ccc;
+  font-size: 0.75rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+footer a {
+  color: #ff0000;
+  text-underline-offset: 2px;
+}
+footer a:hover {
+  color: #f1f1f1;
+}
+footer h3 {
+  font-size: 0.75rem;
+  font-weight: normal;
+}
