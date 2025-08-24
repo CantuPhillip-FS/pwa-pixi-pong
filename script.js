@@ -14,28 +14,30 @@ pongTable.appendChild(app.canvas);
 /* -------------------------------------------------------------------------- */
 /*                            Add bg & text to the page                       */
 /* -------------------------------------------------------------------------- */
-// bg image by <https://pixabay.com/users/prawny-162579/
+// bg image by https://pixabay.com/users/prawny-162579/
 const bgTexture = await PIXI.Assets.load("./background.jpg");
+// add tiling affect
 const tiling = new PIXI.TilingSprite({
   texture: bgTexture,
   width: 800,
   height: 800,
 });
 app.stage.addChild(tiling);
-
+// add a filter to reduce brightness
 const brightnessFilter = new PIXI.ColorMatrixFilter();
 brightnessFilter.brightness(0.5);
 tiling.filters = [brightnessFilter];
-
+// add movement to the tiling to move left
 app.ticker.add(() => {
   tiling.tilePosition.x -= 1;
 });
-
+// create styling for text
 const style = new PIXI.TextStyle({
   fill: "rgba(73, 65, 57, 0.5)",
   fontSize: 72,
   fontFamily: "Inter",
 });
+// create text
 const text = new PIXI.Text({ text: "PIXI Pong!", style });
 // set anchor to the middle of the text
 text.anchor.set(0.5);
@@ -70,7 +72,7 @@ const right = new PIXI.Graphics()
 const bottom = new PIXI.Graphics()
   .rect(0, HEIGHT - THICKNESS, WIDTH, THICKNESS)
   .fill({ color: 0xffffff });
-
+// add to stage
 app.stage.addChild(left, top, right, bottom);
 
 /* -------------------------------------------------------------------------- */
@@ -99,6 +101,7 @@ let leftBounce = false;
 let topBounce = false;
 let rightBounce = false;
 let bottomBounce = false;
+// grab tags from html
 const img = document.querySelector("img");
 const btn = document.getElementById("start");
 const msg = document.getElementById("game-over-text");
@@ -129,12 +132,12 @@ btn.addEventListener("click", () => {
   pongTable.style.display = "block";
 });
 
-// function to redraw recctangles
+// function to redraw rectangles upon hit
 function redraw(side, x, y, width, height, color) {
   side.clear().rect(x, y, width, height).fill({ color });
 }
 
-// change bounce = true & change border color
+// function bounce = true, call redraw function
 function onBounce() {
   if (circle.x <= 0) {
     leftBounce = true;
@@ -154,7 +157,7 @@ function onBounce() {
   }
 }
 
-// function to to stage
+// function to reset the borders to white
 function reset() {
   left.clear().rect(0, 0, THICKNESS, HEIGHT).fill(0xffffff);
   top.clear().rect(0, 0, WIDTH, THICKNESS).fill(0xffffff);
@@ -168,7 +171,7 @@ function reset() {
     .fill(0xffffff);
 }
 
-// Promise to end the game & reset border colors
+// Promise to end the game
 const checkBounce = () => {
   return new Promise((resolve, reject) => {
     if (leftBounce && topBounce && rightBounce && bottomBounce) {
